@@ -2,9 +2,6 @@
 __author__ = "liaokong"
 __time__ = "2018/10/17 15:08"
 
-import os
-import sys
-
 from PySide import QtGui
 from PySide import QtCore
 
