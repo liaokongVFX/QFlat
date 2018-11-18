@@ -2,8 +2,6 @@
 __author__ = "liaokong"
 __time__ = "2018/10/16 14:16"
 
-from functools import partial
-
 from PySide import QtGui
 from PySide import QtCore
 
@@ -217,8 +215,8 @@ class MessageAsk(QtGui.QDialog):
         self.yes_btn.setObjectName("yes_btn")
         self.no_btn = QtGui.QPushButton(u"取消")
         self.no_btn.setObjectName("no_btn")
-        self.yes_btn.clicked.connect(partial(self.return_status, u"确定"))
-        self.no_btn.clicked.connect(partial(self.return_status, u"取消"))
+        self.yes_btn.clicked.connect(self.return_yes)
+        self.no_btn.clicked.connect(self.close)
 
         self.footer_spacer = QtGui.QSpacerItem(77, 0, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
 
@@ -232,12 +230,8 @@ class MessageAsk(QtGui.QDialog):
 
         self.main_layout.addWidget(self.frame)
 
-    def return_status(self, status):
-        if status == u"确定":
-            self.status = True
-        else:
-            self.status = False
-
+    def return_yes(self):
+        self.status = True
         self.close()
 
     def info(self, msg):
@@ -404,7 +398,7 @@ def message_ask(msg, msg_type="info"):
     if msg_type == "info":
         ma.info(msg)
     elif msg_type == "warning":
-        ma.info(msg)
+        ma.warning(msg)
     else:
         raise ValueError
 
@@ -413,11 +407,14 @@ def message_ask(msg, msg_type="info"):
     return ma.status
 
 
-
 if __name__ == '__main__':
     app = QtGui.QApplication([])
 
-    message(u"Qt is a cross-platform application framework from Qt Software (owned by Nokia).", "error")
-    print message_ask(u"Qt is a cross-platform application framework from Qt Software (owned by Nokia).")
+    # message(u"Qt is a cross-platform application framework from Qt Software (owned by Nokia).", "success")
+    # message(u"Qt is a cross-platform application framework from Qt Software (owned by Nokia).", "info")
+    # message(u"Qt is a cross-platform application framework from Qt Software (owned by Nokia).", "warning")
+    # message(u"Qt is a cross-platform application framework from Qt Software (owned by Nokia).", "error")
+    # print message_ask(u"Qt is a cross-platform application framework from Qt Software (owned by Nokia).")
+    # print message_ask(u"Qt is a cross-platform application framework from Qt Software (owned by Nokia).","warning")
 
     app.exec_()

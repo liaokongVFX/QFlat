@@ -22,7 +22,10 @@ class ExampleButtonWid(QtGui.QDialog):
             btn = QtGui.QPushButton(style)
             btn.setMinimumWidth(185)
             btn.setMinimumHeight(30)
+
+            # button style
             button_style(btn, style)
+
             v_layout.addWidget(btn)
 
 

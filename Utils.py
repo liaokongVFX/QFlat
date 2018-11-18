@@ -71,7 +71,7 @@ def table_style(table):
 
 def progress_style(progress, style):
     """
-    style:['Aqua','Grass']
+    style:['Aqua','Grass','Sunflower','Grapefruit']
     """
     return progress.setProperty("class", style)
 

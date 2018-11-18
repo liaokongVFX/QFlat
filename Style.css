@@ -344,6 +344,10 @@ QProgressBar::chunk[class="Sunflower"] {
     background-color: #f6bb42;
 }
 
+QProgressBar::chunk[class="Grapefruit"] {
+    background-color: #da4453;
+}
+
 /*QCheckBox*/
 QCheckBox::indicator:unchecked {
     width: 13px;
