@@ -2,7 +2,7 @@
 __author__ = "liaokong"
 __time__ = "2018/11/16 10:02"
 
-from PySide import QtGui
+from PySide2.QtWidgets import *
 
 from Utils import load_style, button_style
 
@@ -10,16 +10,16 @@ button_style_list = ['MediumGray', 'DarkGray', 'BlueJeans', 'Aqua',
                      'Mint', 'Grass', 'Sunflower', 'Bittersweet', 'Grapefruit', 'Lavender', 'PinkRose']
 
 
-class ExampleButtonWid(QtGui.QDialog):
+class ExampleButtonWid(QDialog):
     def __init__(self, parent=None):
         super(ExampleButtonWid, self).__init__(parent)
 
         load_style(self)
 
-        v_layout = QtGui.QVBoxLayout(self)
+        v_layout = QVBoxLayout(self)
 
         for style in button_style_list:
-            btn = QtGui.QPushButton(style)
+            btn = QPushButton(style)
             btn.setMinimumWidth(185)
             btn.setMinimumHeight(30)
 
@@ -30,7 +30,7 @@ class ExampleButtonWid(QtGui.QDialog):
 
 
 if __name__ == '__main__':
-    app = QtGui.QApplication([])
+    app = QApplication([])
 
     eb = ExampleButtonWid()
     eb.show()

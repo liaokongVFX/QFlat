@@ -4,17 +4,25 @@ __time__ = "2018/10/18 16:20"
 
 import os
 
-from PySide import QtGui
-from PySide import QtCore
+try:
+    from PySide2.QtWidgets import *
+    from PySide2.QtCore import *
+    from PySide2.QtGui import *
+except:
+    from PySide.QtCore import *
+    from PySide.QtGui import *
 
-from MessageWidget import MessageAsk, Message
+from MessageWidget import MessageAsk, Message, InputMessage
 
 
-def message(msg, msg_type="info"):
+def message(msg, msg_type="info", auto_close=True, sec=2.0):
     """
-    msg_type:['success','info','warning','error']
+    :param msg: 要展示的信息
+    :param msg_type: ['success','info','warning','error']
+    :param auto_close: 提示是否自动关闭
+    :param sec: 展示秒数
     """
-    m = Message()
+    m = Message(auto_close=auto_close, sec=sec)
     if msg_type == "info":
         m.info(msg)
     elif msg_type == "success":
@@ -26,7 +34,16 @@ def message(msg, msg_type="info"):
     else:
         raise ValueError
 
+    m.show()
     m.exec_()
+
+
+def error(msg, auto_close=True, sec=2.0):
+    return message(msg, 'error', auto_close, sec)
+
+
+def success(msg, auto_close=True, sec=2.0):
+    return message(msg, 'success', auto_close, sec)
 
 
 def message_ask(msg, msg_type="info"):
@@ -46,9 +63,23 @@ def message_ask(msg, msg_type="info"):
     return ma.status
 
 
-def load_style(obj):
-    return obj.setStyleSheet(open("%s/Style.css" % os.path.dirname(__file__)).read().replace("%PATH%", os.path.dirname(
-        __file__).replace("\\", "/")))
+def input_message(msg, title="提示"):
+    im = InputMessage(title, msg)
+    im.exec_()
+
+    return im.input_text
+
+
+def load_style(obj, style="light"):
+    """
+    style:["light","dark"]
+    """
+    if style not in ["light", "dark"]:
+        style = "light"
+
+    return obj.setStyleSheet(
+        open("%s/%s_style.css" % (os.path.dirname(__file__), style)).read().replace(
+            "%PATH%", os.path.dirname(__file__).replace("\\", "/")))
 
 
 def button_style(button, style):
@@ -59,14 +90,17 @@ def button_style(button, style):
 
 
 def combobox_style(combobox):
-    return combobox.setItemDelegate(QtGui.QStyledItemDelegate())
+    return combobox.setItemDelegate(QStyledItemDelegate())
 
 
 def table_style(table):
     table.setAlternatingRowColors(True)
     table.setShowGrid(False)
-    table.setFocusPolicy(QtCore.Qt.NoFocus)
-    table.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+    table.setFocusPolicy(Qt.NoFocus)
+    try:
+        table.horizontalHeader().setResizeMode(QHeaderView.Stretch)
+    except:
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
 
 def progress_style(progress, style):
@@ -77,5 +111,5 @@ def progress_style(progress, style):
 
 
 def calendar_style(obj):
-    obj.setVerticalHeaderFormat(QtGui.QCalendarWidget.NoVerticalHeader)
-    obj.setHorizontalHeaderFormat(QtGui.QCalendarWidget.NoHorizontalHeader)
+    obj.setVerticalHeaderFormat(QCalendarWidget.NoVerticalHeader)
+    obj.setHorizontalHeaderFormat(QCalendarWidget.NoHorizontalHeader)
